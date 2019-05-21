@@ -1,0 +1,15 @@
+ports:
+- port: 27017 # mongodb
+  onOpen: ignore
+tasks:
+- name: mongodb
+  init: >
+    cd .. &&
+    wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.3.tgz &&
+    tar xaf mongodb-linux-x86_64-3.6.3.tgz &&
+    mkdir data
+  command: /workspace/mongodb-linux-x86_64-3.6.3/bin/mongod --dbpath /workspace/data
+- name: server
+  init: cp sample.env .env && npm i && npm run seed
+  command: npm run develop
+
